@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "description": "Takes an directory of images and packs them into a single bin image and returns a mapping of file names to positions and dimensions",
   "main": "index.js",
+  "bin": {
+    "binpack": "bin/binpack"
+  },
   "directories": {
+    "bin": "bin",
     "test": "test"
   },
   "dependencies": {
@@ -13,7 +17,10 @@
   "scripts": {
     "test": "node test/test.js"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/miningold/binpack.git"
+  },
   "keywords": [
     "bin",
     "pack",
