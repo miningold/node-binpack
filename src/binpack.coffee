@@ -4,8 +4,6 @@ Image = Canvas.Image
 canvas = new Canvas 500, 500
 ctx = canvas.getContext '2d'
 
-imageDir = __dirname + '/images/'
-
 class Rect 
   constructor: (@x, @y, @w, @h) ->
   
@@ -56,8 +54,8 @@ class Node
       
     return @left.insertRect rect
     
-binPack = ->
-  images = fs.readdirSync imageDir
+exports.pack = pack = (imageDir, output) ->
+  images = fs.readdirSync __dirname + imageDir
   console.log images
   
   startNode = new Node
@@ -73,7 +71,7 @@ binPack = ->
     
     rect = new Rect 0, 0, img.width, img.height
     
-    console.log "inserting: " + image + "..."
+    # console.log "inserting: " + image + "..."
     node = startNode.insertRect rect
     if node
       r = node.rect
@@ -84,13 +82,9 @@ binPack = ->
     else
       throw "Not enough room for image: " + image
   
-
-  out = fs.createWriteStream __dirname + '/output.png'
+  out = fs.createWriteStream __dirname + output
   stream = canvas.createPNGStream()
-  
-  console.log map
 
   stream.on 'data', (chunk) ->
     out.write chunk
-    
-binPack()
+  
