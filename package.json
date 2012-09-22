@@ -1,0 +1,25 @@
+{
+  "name": "binpack",
+  "version": "0.0.1",
+  "description": "Takes an directory of images and packs them into a single bin image and returns a mapping of file names to positions and dimensions",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "canvas": "~0.13.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": "",
+  "keywords": [
+    "bin",
+    "pack",
+    "canvas",
+    "images"
+  ],
+  "author": "Tylor Reynolds",
+  "license": "BSD"
+}

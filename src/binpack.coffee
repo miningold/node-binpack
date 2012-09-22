@@ -1,8 +1,8 @@
 fs = require 'fs'
 Canvas = require 'canvas'
 Image = Canvas.Image
-canvas = new Canvas 500, 500
-ctx = canvas.getContext '2d'
+
+exports.version = require('../package').version;
 
 class Rect 
   constructor: (@x, @y, @w, @h) ->
@@ -54,18 +54,24 @@ class Node
       
     return @left.insertRect rect
     
-exports.pack = pack = (imageDir, output) ->
-  images = fs.readdirSync __dirname + imageDir
-  console.log images
+Bin = {}
+    
+pack = (imageDir, w, h) ->
+  canvas = Bin.canvas = new Canvas w, h
+  ctx = Bin.ctx = canvas.getContext '2d'
+
+  images = fs.readdirSync imageDir
+  # console.log images
   
   startNode = new Node
   startNode.rect = new Rect 0, 0, canvas.width, canvas.height
   
-  map = {}
+  map = 
+    images: []
   
   for image in images
     # console.log "loading: " + image + "..."
-    data = fs.readFileSync imageDir + image
+    data = fs.readFileSync imageDir + '/' + image
     img = new Image
     img.src = data
     
@@ -76,15 +82,31 @@ exports.pack = pack = (imageDir, output) ->
     if node
       r = node.rect
       
-      map[image] = r.toSimple()
+      map.images[image] = r.toSimple()
       
       ctx.drawImage img, r.x, r.y
     else
       throw "Not enough room for image: " + image
+      
+  return map
+    
+    
+exports.packImage = packImage = (imageDir, output, w, h) ->
+  map = pack imageDir, w, h
   
-  out = fs.createWriteStream __dirname + output
-  stream = canvas.createPNGStream()
+  out = fs.createWriteStream output
+  stream = Bin.canvas.createPNGStream()
 
   stream.on 'data', (chunk) ->
     out.write chunk
+    
+  return map
+  
+exports.packData = packData = (imageDir, w, h) ->
+  map = pack imageDir, w, h
+  map.data = Bin.canvas.toDataURL()
+  
+  return map
+    
+  
   
