@@ -8,18 +8,25 @@
   },
   "directories": {
     "bin": "bin",
+    "lib": "lib",
+    "src": "src",
     "test": "test"
   },
   "dependencies": {
-    "canvas": "~0.13.1"
+    "canvas": "0.13.x",
+    "optimist": "0.3.x"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "coffee-script": "1.3.x",
+    "mocha": "1.5.x",
+    "should": "1.2.x"
+  },
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node_modules\\.bin\\mocha --reporter spec --compilers coffee:coffee-script test\\"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/miningold/binpack.git"
+    "url": "git://github.com/miningold/node-binpack.git"
   },
   "keywords": [
     "bin",
