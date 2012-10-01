@@ -1,8 +1,10 @@
 build:
-	rm -rf lib/
-	node_modules/.bin/coffee -o lib/ -cb src/
+	node_modules/.bin/coffee -o lib -cb src
 
+clean:
+	rm -rf lib/*
+	
 test:
 	npm test
 	
-.PHONY: test
+.PHONY: build clean test
